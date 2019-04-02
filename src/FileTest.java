@@ -42,20 +42,27 @@ public class FileTest {
 
     }
 
-    public static void searchFiles(List<File> files, String word) throws Exception {
-        //BufferedReader read = new BufferedReader(new FileReader(files.get(i).getPath()));
-        for(int i = 0; i < files.size(); i++) {
-            Scanner input = new Scanner(files.get(i).getPath());
-            while(input.hasNextLine()) {
-                System.out.println("x");
-                if(input.nextLine().contains(word)){
-                    System.out.println(word + " found in file " + files.get(i).getPath());
+    private static void searchFiles(List<File> files, String word) throws Exception {
+        System.out.println("Search start.");
+        System.out.println("-----------------------------");
+        for (File file : files) {
+            Scanner input = new Scanner(file);
+            while (input.hasNextLine()) {
+                String line = input.nextLine();
+                if (line.contains(word)) {
+                    System.out.println(file.getPath() + ":      " + line);
                     wordsFound++;
                 }
             }
         }
-        System.out.println("Scanned " + scannedDirectories + " directories and " + scannedFiles + " files.");
-        System.out.println(wordsFound + " occurences of '" + word + "'.");
+        System.out.println("-----------------------------");
+        if(wordsFound > 0) {
+            System.out.println("Search end.");
+            System.out.println("Searched " + scannedDirectories + " directories and " + scannedFiles + " files.");
+            System.out.println("Found " + wordsFound + " occurences of '" + word + "'.");
+        } else {
+         System.out.println("'" + word + "' does not exist.");
+        }
     }
 
 }
