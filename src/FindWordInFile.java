@@ -8,16 +8,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
-
 import java.io.File;
-import java.io.FilenameFilter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
 
 public class FindWordInFile extends Application {
     public TextArea txtLog = new TextArea();
@@ -28,8 +23,6 @@ public class FindWordInFile extends Application {
     public int scannedDirectories = 0;
     public int scannedFiles = 0;
     public int wordsFound = 0;
-
-
 
     @Override
     public void start(Stage primaryStage) {
@@ -52,7 +45,7 @@ public class FindWordInFile extends Application {
                 listFiles(txtName.getText());
                 searchFiles(allFiles, txtWord.getText());
             } catch (Exception ex) {
-                // fuck off
+                console = "File not found.";
             }});
         btSearch.setPrefWidth(100);
 
