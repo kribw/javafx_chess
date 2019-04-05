@@ -4,9 +4,9 @@ import java.util.List;
 import java.util.Scanner;
 
 public class TestLoanClassStorage {
+    private static List<Loan> allLoans = new ArrayList<>();
+    private static List<Loan> savedLoans = new ArrayList<>();
     public static void main(String[] args) {
-        List<Loan> allLoans = new ArrayList<>();
-        List<Loan> savedLoans = new ArrayList<>();
         boolean mainMenu = true;
 
         File file = new File("src/loans.ser");
@@ -71,21 +71,7 @@ public class TestLoanClassStorage {
                     break;
 
                 case 3:
-                    StringBuilder available = new StringBuilder();
-                    int ij = 0;
-
-                    for(Loan avail : allLoans) {
-                        available.append(ij + ", ");
-                        ij++;
-                    }
-
-                    String printAvailable = "";
-
-                    if(available.length() > 2) {
-                        printAvailable = available.substring(0, available.length() - 2);
-                    }
-
-                    System.out.println("Available loan objects: " + printAvailable);
+                    System.out.println(printAvailable());
                     System.out.print("Please enter the id's of the loan objects you want to view, separated by comma (e.g. 1,2,3): ");
                     String viewLoans = input.next();
                     String[] viewLoansArray = viewLoans.split(",");
@@ -119,6 +105,7 @@ public class TestLoanClassStorage {
                     break;
 
                 case 5:
+                    System.out.println(printAvailable());
                     System.out.print("Please enter the id's of the loan objects you want to save, separated by comma (e.g. 1,2,3): ");
                     String saveLoans = input.next();
                     String[] saveLoansArray = saveLoans.split(",");
@@ -170,5 +157,23 @@ public class TestLoanClassStorage {
                     break;
             }
         }
+    }
+    public static String printAvailable() {
+        StringBuilder available = new StringBuilder();
+        int ij = 0;
+        available.append("Available loan objects: ");
+        for(Loan avail : allLoans) {
+            available.append(ij + ", ");
+            ij++;
+        }
+
+        String printAvailable = "";
+
+        if(available.length() > 2) {
+            printAvailable = available.substring(0, available.length() - 2);
+        } else {
+            printAvailable = "No available objects";
+        }
+        return printAvailable;
     }
 }
