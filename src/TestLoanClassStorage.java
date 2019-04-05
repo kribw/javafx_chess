@@ -71,6 +71,21 @@ public class TestLoanClassStorage {
                     break;
 
                 case 3:
+                    StringBuilder available = new StringBuilder();
+                    int ij = 0;
+
+                    for(Loan avail : allLoans) {
+                        available.append(ij + ", ");
+                        ij++;
+                    }
+
+                    String printAvailable = "";
+
+                    if(available.length() > 2) {
+                        printAvailable = available.substring(0, available.length() - 2);
+                    }
+
+                    System.out.println("Available loan objects: " + printAvailable);
                     System.out.print("Please enter the id's of the loan objects you want to view, separated by comma (e.g. 1,2,3): ");
                     String viewLoans = input.next();
                     String[] viewLoansArray = viewLoans.split(",");
@@ -119,7 +134,7 @@ public class TestLoanClassStorage {
                     }
                     boolean check = false;
                     String printIds = "";
-                    if(savedIds.length() > 0) {
+                    if(savedIds.length() > 2) {
                         printIds = savedIds.substring(0, savedIds.length() - 2);
                         check = true;
                     }
