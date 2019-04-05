@@ -11,11 +11,10 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 public class TowerOfHanoi extends Application {
-    public TextArea txtLog = new TextArea();
-    public String console = "";
-    public TextField txtWord = new TextField();
+    private TextArea txtLog = new TextArea();
+    private String console = "";
+    private TextField txtWord = new TextField();
     private int moves = 0;
-
 
     @Override
     public void start(Stage primaryStage) {
@@ -82,7 +81,6 @@ public class TowerOfHanoi extends Application {
         console = console + text + "\n";
         txtLog.setText(console);
     }
-
 
     public static void main(String[] args) {
         launch(args);

@@ -15,14 +15,14 @@ import java.util.List;
 import java.util.Scanner;
 
 public class FindWordInFile extends Application {
-    public TextArea txtLog = new TextArea();
-    public String console = "";
-    public TextField txtName = new TextField();
-    public TextField txtWord = new TextField();
-    public List<File> allFiles = new ArrayList<>();
-    public int scannedDirectories = 0;
-    public int scannedFiles = 0;
-    public int wordsFound = 0;
+    private TextArea txtLog = new TextArea();
+    private String console = "";
+    private TextField txtName = new TextField();
+    private TextField txtWord = new TextField();
+    private List<File> allFiles = new ArrayList<>();
+    private int scannedDirectories = 0;
+    private int scannedFiles = 0;
+    private int wordsFound = 0;
 
     @Override
     public void start(Stage primaryStage) {
@@ -72,7 +72,7 @@ public class FindWordInFile extends Application {
         primaryStage.show();
     }
 
-    public void listFiles(String path) {
+    private void listFiles(String path) {
         resetSearch();
         File dir = new File(path);
         File[] files = dir.listFiles();
@@ -88,8 +88,7 @@ public class FindWordInFile extends Application {
         }
     }
 
-
-    public void resetSearch() {
+    private void resetSearch() {
         allFiles.clear();
         console = "Search start.";
         console = console + ("\n-----------------------------");
@@ -99,7 +98,7 @@ public class FindWordInFile extends Application {
         wordsFound = 0;
     }
 
-    public void searchFiles(List<File> files, String word) throws Exception {
+    private void searchFiles(List<File> files, String word) throws Exception {
         for (File file : files) {
             Scanner input = new Scanner(file);
             while (input.hasNextLine()) {
