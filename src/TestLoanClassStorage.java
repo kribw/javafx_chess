@@ -84,8 +84,8 @@ public class TestLoanClassStorage {
                         System.out.println("Loan id: " + print);
                         System.out.printf("The loan was created on: %s\n" + "The monthly payment is: %.2f\nThe total payment is: %.2f\n\n",
                                 allLoans.get(print).getLoanDate().toString(), allLoans.get(print).getMonthlyPayment(), allLoans.get(print).getTotalPayment());
-                        break;
                     }
+                    break;
 
                 case 4:
                     System.out.println("Attempting to save all loan objects to file...");
@@ -149,6 +149,7 @@ public class TestLoanClassStorage {
                 case 6:
                     mainMenu = false;
                     break;
+
                 default:
                     System.out.println("Invalid option.\n");
                     break;
