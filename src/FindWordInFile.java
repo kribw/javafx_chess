@@ -45,8 +45,9 @@ public class FindWordInFile extends Application {
                 listFiles(txtName.getText());
                 searchFiles(allFiles, txtWord.getText());
             } catch (Exception ex) {
-                console = "File not found.";
-            }});
+                ex.printStackTrace();
+            }
+            });
         btSearch.setPrefWidth(100);
 
         txtWord.setPromptText("Word");
@@ -73,50 +74,57 @@ public class FindWordInFile extends Application {
     }
 
     private void listFiles(String path) {
-        resetSearch();
-        File dir = new File(path);
-        File[] files = dir.listFiles();
-
-        for (File file : files) {
-            if (file.isDirectory()) {
-                listFiles(file.getPath());
-                scannedDirectories++;
-            } else if (file.isFile() && file.getName().toLowerCase().endsWith(".txt")) {
-                allFiles.add(file);
-                scannedFiles++;
-            }
-        }
-    }
-
-    private void resetSearch() {
         allFiles.clear();
-        console = "Search start.";
-        console = console + ("\n-----------------------------");
-        txtLog.setText(console);
-        scannedDirectories = 0;
         scannedFiles = 0;
+        scannedDirectories = 0;
         wordsFound = 0;
-    }
 
-    private void searchFiles(List<File> files, String word) throws Exception {
-        for (File file : files) {
-            Scanner input = new Scanner(file);
-            while (input.hasNextLine()) {
-                String line = input.nextLine();
-                if (line.toLowerCase().contains(word.toLowerCase())) {
-                    String[] wordAmount = line.split(" ");
-                    int count = 0;
-                    for(String amount : wordAmount) {
-                        if(amount.toLowerCase().contains(word.toLowerCase())) {
-                            count++;
-                        }
-                    }
-                    wordsFound += count;
-                    console = console + "\n" + file.getPath() + ":      " + line;
-                    txtLog.setText(console);
+        File dir = new File(path);
+
+        if(dir.isFile()) {
+            allFiles.add(dir);
+            scannedFiles++;
+        } else {
+            File[] files = dir.listFiles();
+            for (File file : files) {
+                if (file.isDirectory()) {
+                    listFiles(file.getPath());
+                    scannedDirectories++;
+                } else if (file.isFile()) {
+                    allFiles.add(file);
+                    scannedFiles++;
                 }
             }
         }
+    }
+
+    private void searchFiles(List<File> files, String word) {
+        Scanner input;
+        console = console + "Search start.";
+        console = console + "\n-----------------------------";
+        txtLog.setText(console);
+
+        for (File file : files) {
+            try {
+                input = new Scanner(file);
+                while (input.hasNextLine()) {
+                    String line = input.nextLine();
+                    if (line.toLowerCase().contains(word.toLowerCase())) {
+                        String[] wordAmount = line.split(" ");
+                        for (String amount : wordAmount) {
+                            if (amount.toLowerCase().contains(word.toLowerCase())) {
+                                wordsFound++;
+                            }
+                        }
+                        console = console + "\n" + file.getPath() + ":      " + line;
+                        txtLog.setText(console);
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
         console = console + ("\n-----------------------------");
         if(wordsFound > 0) {
             console = console + ("\nSearch end.");
@@ -128,6 +136,7 @@ public class FindWordInFile extends Application {
         console = console + "\n\n";
         txtLog.setText(console);
     }
+
 
     public static void main(String[] args) {
         launch(args);

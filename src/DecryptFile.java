@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 
 import java.io.*;
 
-public class EncryptFile extends Application {
+public class DecryptFile extends Application {
     private String print = "";
     private TextField txtConfirm = new TextField();
     private TextField txtFile = new TextField();
@@ -28,13 +28,13 @@ public class EncryptFile extends Application {
         topBox.setPadding(new Insets(5, 5, 5, 0));
         topBox.setSpacing(10);
 
-        txtFile.setPromptText("File to encrypt");
+        txtFile.setPromptText("File to decrypt");
         txtFile.prefWidthProperty().bind(borderPane.widthProperty().multiply(0.45));
 
-        txtSave.setPromptText("Save encrypted file to");
+        txtSave.setPromptText("Save decrypted file to");
         txtSave.prefWidthProperty().bind(borderPane.widthProperty().multiply(0.45));
 
-        Button btEncrypt = new Button("Encrypt");
+        Button btEncrypt = new Button("Decrypt");
         btEncrypt.setOnAction(e -> {
             File file = new File(txtFile.getText());
             File location = new File(txtSave.getText());
@@ -55,7 +55,7 @@ public class EncryptFile extends Application {
         // Scene
         Scene scene = new Scene(borderPane, width, height);
         topBox.requestFocus();
-        primaryStage.setTitle("Encrypt file");
+        primaryStage.setTitle("Decrypt file");
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
         primaryStage.show();
@@ -68,22 +68,22 @@ public class EncryptFile extends Application {
                 FileInputStream fileInputStream = new FileInputStream(file);
                 BufferedInputStream bufferedInputStream = new BufferedInputStream(fileInputStream);
 
-                byte[] arrayToEncrypt = bufferedInputStream.readAllBytes();
-                byte[] encryptedArray = new byte[arrayToEncrypt.length];
+                byte[] arrayToDecrypt = bufferedInputStream.readAllBytes();
+                byte[] decryptedArray = new byte[arrayToDecrypt.length];
                 fileInputStream.close();
                 bufferedInputStream.close();
                 int i = 0;
-                for (byte originalByte : arrayToEncrypt) {
-                    encryptedArray[i] = (byte) (originalByte + 5) ;
+                for (byte originalByte : arrayToDecrypt) {
+                    decryptedArray[i] = (byte) (originalByte - 5) ;
                     i++;
                 }
 
-                FileOutputStream fileOutputStream = new FileOutputStream(location, false);
+                FileOutputStream fileOutputStream = new FileOutputStream(location);
                 BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(fileOutputStream);
-                bufferedOutputStream.write(encryptedArray);
+                bufferedOutputStream.write(decryptedArray);
                 bufferedOutputStream.close();
                 fileOutputStream.close();
-                txtConfirm.setText("File " + file.getPath() + " has been encrypted and saved to " + location.getPath() + ".");
+                txtConfirm.setText("File " + file.getPath() + " has been decrypted and saved to " + location.getPath() + ".");
             } catch (Exception e) {
                 e.printStackTrace();
             }
