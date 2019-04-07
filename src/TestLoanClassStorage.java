@@ -90,11 +90,11 @@ public class TestLoanClassStorage {
                     String[] viewLoansArray = viewLoans.split(",");
                     List<Integer> idList = new ArrayList<>();
 
-                    for(String view : viewLoansArray) {
+                    for (String view : viewLoansArray) {
                         idList.add(Integer.parseInt(view));
                     }
 
-                    for(int print : idList) {
+                    for (int print : idList) {
                         System.out.println("Loan id: " + print);
                         System.out.printf("The loan was created on: %s\n" + "The monthly payment is: %.2f\nThe total payment is: %.2f\n\n",
                                 allLoans.get(print).getLoanDate().toString(), allLoans.get(print).getMonthlyPayment(), allLoans.get(print).getTotalPayment());
@@ -195,6 +195,7 @@ public class TestLoanClassStorage {
         } else {
             printAvailable = "No available objects.";
         }
+
         return printAvailable;
     }
 }

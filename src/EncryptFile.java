@@ -11,7 +11,6 @@ import javafx.stage.Stage;
 import java.io.*;
 
 public class EncryptFile extends Application {
-    private String print = "";
     private TextField txtConfirm = new TextField();
     private TextField txtFile = new TextField();
     private TextField txtSave = new TextField();
@@ -48,7 +47,6 @@ public class EncryptFile extends Application {
 
 
         // Center
-        txtConfirm.setText(print);
         txtConfirm.setEditable(false);
         borderPane.setCenter(txtConfirm);
 
@@ -59,7 +57,6 @@ public class EncryptFile extends Application {
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
         primaryStage.show();
-
     }
 
     private void encrypt(File file, File location) {
@@ -95,5 +92,4 @@ public class EncryptFile extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-
 }

@@ -12,7 +12,6 @@ import javafx.stage.Stage;
 
 public class TowerOfHanoi extends Application {
     private TextArea txtLog = new TextArea();
-    private String console = "";
     private TextField txtWord = new TextField();
     private int moves = 0;
 
@@ -31,10 +30,10 @@ public class TowerOfHanoi extends Application {
         Button btSearch = new Button("Find moves");
         btSearch.setOnAction(e -> {
             clear();
-            print("Number of disks: " + txtWord.getText());
-            print("Moves are:\n");
+            txtLog.appendText("Number of disks: " + txtWord.getText() + "\n");
+            txtLog.appendText("Moves are:\n\n");
             findMoves(Integer.parseInt(txtWord.getText()),"A", "B", "C");
-            print("\nNumber of calls to the method is: " + moves);
+            txtLog.appendText("\nNumber of calls to the method is: " + moves);
         });
         btSearch.setPrefWidth(100);
 
@@ -46,7 +45,7 @@ public class TowerOfHanoi extends Application {
         borderPane.setTop(topBox);
 
         // Center
-        txtLog.setText(console);
+        txtLog.setText("");
         txtLog.setEditable(false);
         StackPane stackPane = new StackPane();
         stackPane.getChildren().add(txtLog);
@@ -64,22 +63,18 @@ public class TowerOfHanoi extends Application {
     private void findMoves(int disks, String start_location, String end_location, String temp_location) {
         if (disks == 1) {
             moves++;
-            print("Move number: (" + moves + ") - Moved disk 1 from " +  start_location + " to " + end_location);
+            txtLog.appendText("Move number: (" + moves + ") - Moved disk 1 from " +  start_location + " to " + end_location + "\n");
             return;
         }
         findMoves(disks - 1, start_location, temp_location, end_location);
         moves++;
-        print("Move number: (" + moves + ") - Moved disk " + disks + " from " +  start_location + " to " + end_location);
+        txtLog.appendText("Move number: (" + moves + ") - Moved disk " + disks + " from " +  start_location + " to " + end_location + "\n");
         findMoves(disks - 1, temp_location, end_location, start_location);
     }
 
     private void clear() {
-        console = "";
-    }
-
-    private void print(String text){
-        console = console + text + "\n";
-        txtLog.setText(console);
+        moves = 0;
+        txtLog.setText("");
     }
 
     public static void main(String[] args) {

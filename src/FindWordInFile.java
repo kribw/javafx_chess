@@ -16,7 +16,6 @@ import java.util.Scanner;
 
 public class FindWordInFile extends Application {
     private TextArea txtLog = new TextArea();
-    private String console = "";
     private TextField txtName = new TextField();
     private TextField txtWord = new TextField();
     private List<File> allFiles = new ArrayList<>();
@@ -42,6 +41,7 @@ public class FindWordInFile extends Application {
         Button btSearch = new Button("Search");
         btSearch.setOnAction(e -> {
             try {
+                allFiles.clear();
                 listFiles(txtName.getText());
                 searchFiles(allFiles, txtWord.getText());
             } catch (Exception ex) {
@@ -58,7 +58,6 @@ public class FindWordInFile extends Application {
         borderPane.setTop(topBox);
 
         // Center
-        txtLog.setText(console);
         txtLog.setEditable(false);
         StackPane stackPane = new StackPane();
         stackPane.getChildren().add(txtLog);
@@ -74,7 +73,6 @@ public class FindWordInFile extends Application {
     }
 
     private void listFiles(String path) {
-        allFiles.clear();
         scannedFiles = 0;
         scannedDirectories = 0;
         wordsFound = 0;
@@ -100,9 +98,8 @@ public class FindWordInFile extends Application {
 
     private void searchFiles(List<File> files, String word) {
         Scanner input;
-        console = console + "Search start.";
-        console = console + "\n-----------------------------";
-        txtLog.setText(console);
+        txtLog.appendText("Search start.\n");
+        txtLog.appendText("-----------------------------\n");
 
         for (File file : files) {
             try {
@@ -116,27 +113,23 @@ public class FindWordInFile extends Application {
                                 wordsFound++;
                             }
                         }
-                        console = console + "\n" + file.getPath() + ":      " + line;
-                        txtLog.setText(console);
+                        txtLog.appendText(file.getPath() + ":      " + line + "\n");
                     }
                 }
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-
-        console = console + ("\n-----------------------------");
+        txtLog.appendText("-----------------------------\n");
         if(wordsFound > 0) {
-            console = console + ("\nSearch end.");
-            console = console + ("\nSearched " + scannedDirectories + " directories and " + scannedFiles + " files.");
-            console = console + ("\nFound " + wordsFound + " occurences of '" + word.toLowerCase() + "'.");
+            txtLog.appendText("Search end.\n");
+            txtLog.appendText("Searched " + scannedDirectories + " directories and " + scannedFiles + " files.\n");
+            txtLog.appendText("Found " + wordsFound + " occurences of '" + word.toLowerCase() + "'.\n");
         } else {
-            console = console + ("\n'" + word.toLowerCase() + "' does not exist.");
+            txtLog.appendText("\n'" + word.toLowerCase() + "' does not exist.");
         }
-        console = console + "\n\n";
-        txtLog.setText(console);
+        txtLog.appendText("\n\n");
     }
-
 
     public static void main(String[] args) {
         launch(args);

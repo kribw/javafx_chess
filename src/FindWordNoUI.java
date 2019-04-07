@@ -1,11 +1,11 @@
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class FindWordNoUI{
+public class FindWordNoUI {
     private static List<File> allFiles = new ArrayList<>();
-    private static String console = "";
     private static int scannedDirectories = 0;
     private static int scannedFiles = 0;
     private static int wordsFound = 0;
@@ -22,17 +22,14 @@ public class FindWordNoUI{
     }
 
     private static void listFiles(String path) {
-        allFiles.clear();
         scannedFiles = 0;
         scannedDirectories = 0;
         wordsFound = 0;
 
         File dir = new File(path);
 
-        if(dir.isFile()) {
-            allFiles.add(dir);
-            scannedFiles++;
-        } else {
+        if (dir.isDirectory()) {
+            scannedDirectories++;
             File[] files = dir.listFiles();
             for (File file : files) {
                 if (file.isDirectory()) {
@@ -43,6 +40,9 @@ public class FindWordNoUI{
                     scannedFiles++;
                 }
             }
+        } else if (dir.isFile()) {
+            allFiles.add(dir);
+            scannedFiles++;
         }
     }
 
@@ -51,12 +51,15 @@ public class FindWordNoUI{
         System.out.println("Search start.");
         System.out.println("\n-----------------------------");
 
+        int i = 0;
         for (File file : files) {
             try {
                 input = new Scanner(file);
                 while (input.hasNextLine()) {
+                    i++;
                     String line = input.nextLine();
                     if (line.toLowerCase().contains(word.toLowerCase())) {
+                        System.out.println("contains");
                         String[] wordAmount = line.split(" ");
                         for (String amount : wordAmount) {
                             if (amount.toLowerCase().contains(word.toLowerCase())) {
@@ -66,18 +69,23 @@ public class FindWordNoUI{
                         System.out.println("\n" + file.getPath() + ":      " + line);
                     }
                 }
-            } catch (Exception e) {
+            } catch (FileNotFoundException e) {
+                System.out.println("File not found");
                 e.printStackTrace();
             }
         }
+        System.out.println(i);
+
         System.out.println("\n-----------------------------");
+
         if(wordsFound > 0) {
             System.out.println("\nSearch end.");
             System.out.println("\nSearched " + scannedDirectories + " directories and " + scannedFiles + " files.");
             System.out.println("\nFound " + wordsFound + " occurences of '" + word.toLowerCase() + "'.");
         } else {
-            System.out.println("\n'" + word.toLowerCase() + "' does not exist.");
+            System.out.println("\n'" + word.toLowerCase() + "' does not exist in any file.");
         }
+
         System.out.println("\n\n");
     }
 }
